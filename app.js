@@ -2,7 +2,6 @@ const express = require('express')
 const https = require('https')
 const app = express()
 const request = require('request')
-const PORT = process.env.PORT || 3000;
 const mongoose = require('mongoose')
 const cron = require('node-cron')
 const cors = require('cors');
@@ -11,6 +10,9 @@ const url= process.env.URL_MONGO || urlocal;
 var MongoClient = require('mongodb').MongoClient;
 const bodyParser = require('body-parser');
 const Weather = require("./weather");
+const PORT = process.env.PORT
+const MONGO_URL = process.env.MONGO_URL;
+require('dotenv').config({path:"./.env"})
 
 
 
@@ -18,7 +20,7 @@ const Weather = require("./weather");
 
 const options = {
   method: 'GET',
-  url: 'https://api.openweathermap.org/data/2.5/forecast?q=London&appid=16c4230a0b9b1a4d6647594e1d280088',
+  url: 'https://api.openweathermap.org/data/2.5/forecast?q=Paris&appid=16c4230a0b9b1a4d6647594e1d280088',
   
 };
 
@@ -30,7 +32,7 @@ app.get('/', (req, res) => {
 app.listen(process.env.PORT);
 
 //connection à MongoDB
-mongoose.connect("mongodb+srv://laetitia:laetitia@aerodataboxproject4.ezdkr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+mongoose.connect(MONGO_URL,
  {   //pour recuperer le 1er paramètre, aller sur mongodb, cliquer sur connect > connect your application
      useNewUrlParser: true, useUnifiedTopology:true
     }).then(()=>{
